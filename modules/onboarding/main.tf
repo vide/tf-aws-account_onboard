@@ -7,3 +7,12 @@ module "organization" {
     description = "Administrators group"
   }
 }
+
+module "accounts" {
+  source = "../account"
+  accounts = [{
+    name      = "FooBar"
+    email     = "foo@vide.fastmail.com"
+    parent_id = module.organization.ou_id
+  }]
+}

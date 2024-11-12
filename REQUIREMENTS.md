@@ -10,7 +10,7 @@ AWS accounts.
 ## **Timeline:**
 
 Candidates will have 1 week to complete this challenge and then to deliver your results to the
-Hiring Lead (gerard@aparentmedia.com).
+Hiring Lead (*REDACTED*).
 
 **Due Date:** Monday, November 18th
 

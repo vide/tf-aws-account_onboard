@@ -1,21 +1,5 @@
-variable "account_name" {
-  type    = string
-  default = ""
-}
-
-variable "domain_name" {
-  type    = string
-  default = ""
-}
-
-variable "dns_records" {
-  type    = list(string) # TODO: use proper object
-  default = []
-}
-
-
 variable "accounts" {
-  description = "List of the accounts to be created. Mandatory values: `name`, `email` and `parent_id`"
+  description = "List of the accounts to be created. Mandatory values: `name`"
   type = list(object({
     name              = string
     email             = string
@@ -31,5 +15,4 @@ variable "accounts" {
       records = list(string)
     })), [])
   }))
-  default = []
 }
