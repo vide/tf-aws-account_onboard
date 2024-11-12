@@ -6,7 +6,6 @@ variable "accounts" {
     parent_id         = string
     close_on_deletion = optional(bool, false)
     role              = optional(string, "RootAccountAccessRole")
-    enable_dns        = optional(bool, false)
     domain_name       = optional(string, null)
     dns_records = optional(list(object({
       name    = string

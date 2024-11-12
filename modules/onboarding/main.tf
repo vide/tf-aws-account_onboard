@@ -8,11 +8,16 @@ module "organization" {
   }
 }
 
+# I assumed that "end-users" don't have a choice in which OU they are landing
+# so I just inject the same OU in every account. If we want users to easily customize 
+# this, I would take another approach for sure.
+locals {
+  accounts_with_parent = [
+    for a in var.accounts : merge(a, { parent_id = module.organization.ou_id })
+  ]
+}
+
 module "accounts" {
-  source = "../account"
-  accounts = [{
-    name      = "FooBar"
-    email     = "foo@vide.fastmail.com"
-    parent_id = module.organization.ou_id
-  }]
+  source   = "../account"
+  accounts = local.accounts_with_parent
 }
