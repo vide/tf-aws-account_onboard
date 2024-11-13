@@ -1,5 +1,5 @@
 variable "accounts" {
-  description = "List of the accounts to be created. Mandatory values: `name`"
+  description = "List of the accounts to be created. Mandatory values: `name`, `email`, `parent_id`"
   type = list(object({
     name              = string
     email             = string
