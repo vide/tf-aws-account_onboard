@@ -104,4 +104,41 @@ You can now run
 $ terraform plan
 $ terraform apply
 ```
+
 :warning: Since this is a "simple" exercise, it uses by default a local statefile (which is gitignored). Obviously this is NOT OPTIMAL for a real world usage (i.e. everything above a single user running it from their machine).
+
+## Usage example
+
+The meat is in `main.tf`, in the `accounts` parameter when calling the [`onboarding`](modules/onboarding/README.md)
+
+
+```hcl
+module "account_onboarding" {
+  source = "./modules/onboarding"
+  accounts = [{
+    name = "YourNewAccountName"
+    email       = "owner@example.com"
+    domain_name = "example2.com"
+    dns_records = [{
+      name    = "foo"
+      records = ["1.1.1.1"]
+      ttl     = 3600
+      type    = "A"
+    }]
+  },
+  {
+    name = "AnotherAccount"
+    email       = "another_owner@example.com"
+    domain_name = "localdomain"
+    dns_records = [{
+      name    = "bar"
+      records = ["foobar"]
+      ttl     = 3600
+      type    = "TXT"
+    }]
+  }
+  ]
+}
+```
+
+You can specify multiple accounts, and in each account you can specify multiple DNS records to be created.
