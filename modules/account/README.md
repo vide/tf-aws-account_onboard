@@ -1,4 +1,12 @@
 <!-- BEGIN_TF_DOCS -->
+# The `account` module
+
+This module creates the children accounts in the main Organization, under a fixed
+`my-ou` Organizational Unit.
+
+It also creates a DNS domain and a hosted zone **in the root account**, plus all the desired DNS records.
+If the `domain_name` parameter is null, it will **NOT** create any DNS resource at all.
+
 ## Requirements
 
 | Name | Version |

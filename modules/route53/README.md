@@ -1,4 +1,11 @@
 <!-- BEGIN_TF_DOCS -->
+# The `route53` module
+
+This module creates all the DNS/Route53 related infra.
+
+It creates a DNS domain and a hosted zone **in the root account**, plus all the desired DNS records.
+If the `domain_name` parameter is null, it will **NOT** create any DNS resource at all.
+
 ## Requirements
 
 | Name | Version |
@@ -33,5 +40,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_zone_id"></a> [zone\_id](#output\_zone\_id) | The Zone ID seems a useful value to return outside the module |
+| <a name="output_zone_id"></a> [zone\_id](#output\_zone\_id) | Zone ID of the hosted zone created |
 <!-- END_TF_DOCS -->

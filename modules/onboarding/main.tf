@@ -1,3 +1,15 @@
+/**
+ * # The `onboarding` module
+ *
+ * This is the main module, in charge of creating everything requested.
+ * If the logic of the infrastructure needs to be extended or modified, this
+ * is the right place to do it.
+ * 
+ * If a `domain_name` parameter within the `accounts` list of maps  is null, it will **NOT** create any DNS resource at all
+ * for that account.
+ *
+ */
+
 module "organization" {
   source              = "../organization"
   ou_name             = "my-ou"
