@@ -3,13 +3,13 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.74 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.75 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.74 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.75 |
 
 ## Modules
 
@@ -33,7 +33,7 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_arn"></a> [arn](#output\_arn) | Map of `{ account_name: ARN }` |
-| <a name="output_id"></a> [id](#output\_id) | Map of `{ account_name: account_id }` |
-| <a name="output_status"></a> [status](#output\_status) | Map of `{ account_name: account_status }` |
+| <a name="output_arn"></a> [arn](#output\_arn) | Map of ARNs `{ account_name: ARN }` |
+| <a name="output_id"></a> [id](#output\_id) | Map of account IDs `{ account_name: account_id }` |
+| <a name="output_status"></a> [status](#output\_status) | Map of account statuses `{ account_name: account_status }` |
 <!-- END_TF_DOCS -->
