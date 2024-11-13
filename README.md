@@ -48,7 +48,7 @@ $ brew install direnv
 
 ### `pre-commit` framework *(optional)*
 
-[`pre-commit`(https://pre-commit.com/#install)] is optional but highly reccommended, since it automatically manages the Terraform Docs installation and generation with pre-commit hooks, so you don't have to think about regenerating it each time.
+[`pre-commit`](https://pre-commit.com/#install) is optional but highly reccommended, since it automatically manages the Terraform Docs installation and generation with pre-commit hooks, so you don't have to think about regenerating it each time.
 
 If you use Homebrew you can install with:
 
@@ -90,7 +90,7 @@ Register a new AWS standalone account. For this you will need:
 4.  Now you can follow the activation email for the `superadmin` account. When logging in for the first time, instead of going to the web console, click on the `Access keys` link, and note down the `SSO start URL` and `SSO Region` values.
 5.  Run `aws --profile exercise-root-superadmin configure sso` in a terminal. This will create a dedicated AWS CLI profile called `exercise-root-superadmin` with all needed for SSO access. Follow the instructions on screen and refer to the AWS CLI official guide for more help, if needed.
 
-:note: Another option, following the "legacy" users and groups with static access keys, it's to skip the SSO user creation and instead create the superadmin as a classic user, and then generate the static access keys for it and save them in your AWS SDK config directory (`~/.aws`). This works as well but AWS is pushing hard to stop people using it, because it's less secure. But if you know what you do and you are sure about it, go ahead.
+> 🗒️ Another option, following the "legacy" users and groups with static access keys, it's to skip the SSO user creation and instead create the superadmin as a classic user, and then generate the static access keys for it and save them in your AWS SDK config directory (`~/.aws`). This works as well but AWS is pushing hard to stop people using it, because it's less secure. But if you know what you do and you are sure about it, go ahead.
 
 ### Terraform bootstrap
 
@@ -126,7 +126,7 @@ $ terraform apply
 
 # Usage example
 
-The meat is in `main.tf`, in the `accounts` parameter when calling the [`onboarding`](modules/onboarding/README.md)
+The real meat is in `main.tf`, in the `accounts` parameter when calling the [`onboarding`](modules/onboarding/README.md) module.
 
 
 ```hcl
