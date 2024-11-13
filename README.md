@@ -2,22 +2,106 @@
 
 This is my implementation of what requested for the exercise. You can find the initial statement in [REQUIREMENTS.md](REQUIREMENTS.md)
 
-WORK IN PROGRESS. I will add more instructions here, at the moment it works like some kind of diary/personal notes.
+You can find some insights on the decision-making process and the tradeoffs and issues I faced in [DECISIONS.md](DECISIONS.md)
 
----
+# Bootstrapping the exercise
 
+## Prerequisites 
 
-1. Register a new AWS standalone account. For this you will need:
-   1. an email address for the root user
-   2. a valid telephone number to complete the CAPTCHA
-   3. a valid credit/debit card :money_with_wings:
-2. In the AWS web console, create a "legacy" user and its access keys. Add this user to a group with admin permissions and generate an AWS access key for that user. If in your account you already have IAM configured or accounts/keys created, you can skip this step.
-   1. Run `aws configure` or create the relevant `.aws/` files with your default region of choice, your AWS Account ID and its secret key.
-   2. 🤦🏻 ClickOps! 🤦🏻 In the web console, enable the AWS IAM Identity Center feature. This can be only done manually even according to [AWS IAM <> Terraform integration code](https://github.com/aws-ia/terraform-aws-permission-sets?tab=readme-ov-file#prerequisites).
-   3. [CHECKME] At this point, we could probably create the first user with programmatic access here instead of point 1, following AWS best practices. We would use then `aws sso` to login.
-   4. :warning: **Do not enable** the AWS Organizations from the UI
-   5. [CHECKME] If you created the AWS Organizations in the UI, you will need to `terraform import` it.
+### AWS CLI
 
-### Lessons learned (or remembered... again)
+You can install with [Homebrew](https://brew.sh/) under Linux/MacOS, use your distribution resources in Linux or follow the [official AWS installation guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
+If you are a `brew` user, it is simple as:
 
-* AWS Accounts can be a bad beast with Terraform because there are important things behind private API (i.e. payment method) and because well, they are a very sensitive piece of AWS (imagine destroying an account by accident), so they might need some extra manual steps, especially if you are playing-doing PoC with them. And also [mandatory wait times](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_troubleshoot.html#troubleshoot_general_error-wait-req) before being able to actually perform the action.
+```
+$ brew install awscli
+```
+
+### `tfenv` (optional)
+
+You can use [`tfenv`](https://github.com/tfutils/tfenv) to install and manage Terraform installation and version pinning.
+If you use Homebrew you can install with:
+
+```
+$ brew install tfenv
+```
+
+and then install the right Terraform version in this repo with:
+
+```
+$ tfenv install
+```
+
+### `direnv` (optional)
+
+You can use [`direnv`](https://github.com/direnv/direnv) to dynamically load environment variables in a project directory
+If you use Homebrew you can install with:
+
+```
+$ brew install direnv
+```
+
+### `terraform-docs` 
+
+### `make`
+
+Make should be already present in any POSIX platform, even on Windows with WSL2 installed.
+
+### AWS Root Account creation
+
+*If you already have a spare, standalone AWS account that can be used as the root account for the new organization, skip this part.*
+
+Register a new AWS standalone account. For this you will need:
+1. a valid email address for the root user
+2. a valid telephone number to complete the CAPTCHA
+3. a valid credit/debit card :money_with_wings:
+
+## The actual bootstrap process
+
+### Programmatic account setup
+
+1. Login into the account web console
+2. 🤦🏻 ClickOps alert! 🤦🏻 Enable the AWS IAM Identity Center feature. This can be only done manually even according to the [`identity-center-with-terraform` module by AWS](https://github.com/aws-samples/identity-center-with-terraform?tab=readme-ov-file#prerequisites). **Remember to use the region you will use with Terraform! By default, `eu-west-1`**
+   1. This, in turn, will force you to enable AWS Orgs in the UI as well, forcing us to import it later in Terraform.
+   2. ![Proof that IAM Identity Center forces you to create Orgs in the UI](iam-orgs.png)
+   3. Choose the **Enable with AWS Organizations**
+3. Create a super-admin user in the [IAM Identity Center](https://eu-west-1.console.aws.amazon.com/singlesignon/home?region=eu-west-1#!/instances/68048cb1c0550830/dashboard) with programmatic access and SSO, following AWS best practices.
+   1.  [Create a group](https://eu-west-1.console.aws.amazon.com/singlesignon/home?region=eu-west-1#!/instances/68048cb1c0550830/groups) and call it, for example, `superadmins`
+   2.  [Create an user](https://eu-west-1.console.aws.amazon.com/singlesignon/home?region=eu-west-1#!/instances/68048cb1c0550830/users) and call it, for example, `superadmin`. Put a valid email address (:warning: you will get an **activation email** there!) and follow the creation instructions. Add it to the `superadmins` group.
+   3.  Create a `superadmin` [permission set](https://eu-west-1.console.aws.amazon.com/singlesignon/organization/home?region=eu-west-1#/instances/68048cb1c0550830/permission-sets), assigning the AWS Managed policy [`AdministratorAccess`](https://us-east-1.console.aws.amazon.com/iam/home?region=eu-west-1#/policies/details/arn%3Aaws%3Aiam%3A%3Aaws%3Apolicy%2FAdministratorAccess)
+   4.  Go to the [AWS Accounts subpage](https://eu-west-1.console.aws.amazon.com/singlesignon/organization/home?region=eu-west-1#/instances/68048cb1c0550830/accounts), select the root (management) account and click "Assign users or group". Assign the `superadmins` user you have created.
+4.  Now you can follow the activation email for the `superadmin` account. When logging in for the first time, instead of going to the web console, click on the `Access keys` link, and note down the `SSO start URL` and `SSO Region` values.
+5.  Run `aws --profile exercise-root-superadmin configure sso` in a terminal. This will create a dedicated AWS CLI profile called `exercise-root-superadmin` with all needed for SSO access. Follow the instructions on screen and refer to the AWS CLI official guide for more help, if needed.
+
+:note: Another option, following the "legacy" users and groups with static access keys, it's to skip the SSO user creation and instead create the superadmin as a classic user, and then generate the static access keys for it and save them in your AWS SDK config directory (`~/.aws`). This works as well but AWS is pushing hard to stop people using it, because it's less secure. But if you know what you do and you are sure about it, go ahead.
+
+### Terraform bootstrap
+
+If you have `direnv`, run:
+```
+$ echo "export AWS_PROFILE=exercise-root-superadmin" > .envrc
+$ direnv allow .
+```
+
+otherwise, remember to run
+```
+export AWS_PROFILE=exercise-root-superadmin
+```
+
+at least once before running Terraform.
+
+Now you need to import the Org ID created in the web console. Run
+
+```
+$ make import_organization
+```
+
+It will exit with return status 0 if everything is OK. If it doesn't, you are probably not correctly authenticated or maybe there is some issue with the AWS region settings.
+
+You can now run
+
+```
+$ terraform plan
+$ terraform apply
+```
+:warning: Since this is a "simple" exercise, it uses by default a local statefile (which is gitignored). Obviously this is NOT OPTIMAL for a real world usage (i.e. everything above a single user running it from their machine).
