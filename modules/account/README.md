@@ -3,13 +3,13 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.75 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.74 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.75 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.74 |
 
 ## Modules
 
