@@ -13,39 +13,56 @@ You can find some insights on the decision-making process and the tradeoffs and 
 You can install with [Homebrew](https://brew.sh/) under Linux/MacOS, use your distribution resources in Linux or follow the [official AWS installation guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
 If you are a `brew` user, it is simple as:
 
-```
+```bash
 $ brew install awscli
 ```
+
+### `make`
+
+Make should be already present in any POSIX platform, even on Windows with WSL2 installed.
+Check the [`Makefile`](Makefile) for more details about what's available.
 
 ### `tfenv` (optional)
 
 You can use [`tfenv`](https://github.com/tfutils/tfenv) to install and manage Terraform installation and version pinning.
 If you use Homebrew you can install with:
 
-```
+```bash
 $ brew install tfenv
 ```
 
 and then install the right Terraform version in this repo with:
 
-```
+```bash
 $ tfenv install
 ```
 
-### `direnv` (optional)
+### `direnv` *(optional)*
 
 You can use [`direnv`](https://github.com/direnv/direnv) to dynamically load environment variables in a project directory
 If you use Homebrew you can install with:
 
-```
+```bash
 $ brew install direnv
 ```
 
-### `terraform-docs` 
+### `pre-commit` framework *(optional)*
 
-### `make`
+[`pre-commit`(https://pre-commit.com/#install)] is optional but highly reccommended, since it automatically manages the Terraform Docs installation and generation with pre-commit hooks, so you don't have to think about regenerating it each time.
 
-Make should be already present in any POSIX platform, even on Windows with WSL2 installed.
+If you use Homebrew you can install with:
+
+```bash
+$ brew install pre-commit
+```
+
+and then run
+
+```bash
+$ make install_precommits
+```
+
+Once installed, everytime some file that Terraform Docs is "watching" changes, it will regenerate automatically the managed documentation, that you can review and then commit for good.
 
 ### AWS Root Account creation
 
@@ -107,7 +124,7 @@ $ terraform apply
 
 :warning: Since this is a "simple" exercise, it uses by default a local statefile (which is gitignored). Obviously this is NOT OPTIMAL for a real world usage (i.e. everything above a single user running it from their machine).
 
-## Usage example
+# Usage example
 
 The meat is in `main.tf`, in the `accounts` parameter when calling the [`onboarding`](modules/onboarding/README.md)
 
