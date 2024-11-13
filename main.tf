@@ -3,7 +3,7 @@ module "account_onboarding" {
   accounts = [{
     name = "FooBar"
     # if we get to review this together, I'll explain why this is here :) 
-    email       = "foo@vide.fastmail.com"
+    email       = "foo2@vide.fastmail.com"
     domain_name = "foobar.wtf"
     dns_records = [{
       name    = "foo"

@@ -17,3 +17,9 @@ variable "identity_group" {
     description = string
   })
 }
+
+variable "existing_org_id" {
+  description = "The ID of the existing Organization created via the web console during root account bootstrap. Will be used to import it in the state."
+  type        = string
+  default     = null
+}
