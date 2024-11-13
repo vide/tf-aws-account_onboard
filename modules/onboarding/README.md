@@ -1,4 +1,13 @@
 <!-- BEGIN_TF_DOCS -->
+# The `onboarding` module
+
+This is the main module, in charge of creating everything requested.
+If the logic of the infrastructure needs to be extended or modified, this
+is the right place to do it.
+
+If a `domain_name` parameter within the `accounts` list of maps  is null, it will **NOT** create any DNS resource at all
+for that account.
+
 ## Requirements
 
 | Name | Version |
@@ -30,7 +39,7 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_accounts_arn"></a> [accounts\_arn](#output\_accounts\_arn) | n/a |
-| <a name="output_accounts_id"></a> [accounts\_id](#output\_accounts\_id) | n/a |
-| <a name="output_accounts_status"></a> [accounts\_status](#output\_accounts\_status) | n/a |
+| <a name="output_accounts_arn"></a> [accounts\_arn](#output\_accounts\_arn) | Map of ARNs `{ account_name: ARN }` |
+| <a name="output_accounts_id"></a> [accounts\_id](#output\_accounts\_id) | Map of account IDs `{ account_name: account_id }` |
+| <a name="output_accounts_status"></a> [accounts\_status](#output\_accounts\_status) | Map of account statuses `{ account_name: account_status }` |
 <!-- END_TF_DOCS -->

@@ -1,3 +1,10 @@
+/**
+ * # The `organization` module
+ *
+ * This module creates  the main Organization, and its OUs. Currently it just creates
+ * one single, fixed OU. 
+ *
+ */
 
 # AWS Org API works only in the "global" region
 provider "aws" {

@@ -1,4 +1,9 @@
 <!-- BEGIN_TF_DOCS -->
+# The `organization` module
+
+This module creates  the main Organization, and its OUs. Currently it just creates
+one single, fixed OU.
+
 ## Requirements
 
 | Name | Version |

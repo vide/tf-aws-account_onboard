@@ -1,4 +1,12 @@
-# route53.tf
+/**
+ * # The `route53` module
+ *
+ * This module creates all the DNS/Route53 related infra.
+ * 
+ * It creates a DNS domain and a hosted zone **in the root account**, plus all the desired DNS records.
+ * If the `domain_name` parameter is null, it will **NOT** create any DNS resource at all.
+ *
+ */
 
 resource "aws_route53_zone" "this" {
   name = var.domain
