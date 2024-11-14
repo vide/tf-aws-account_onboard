@@ -9,6 +9,13 @@
  *
  */
 
+locals {
+  # auto-generate an email for the account owner, if none was passed explicitly.
+  # TODO: make the templated address easier to customize
+  email = { for a in var.accounts : a.name => (a.email == null ? "acct_${lower(a.name)}@vide.fastmail.com" : a.email)
+  }
+}
+
 module "route53" {
   for_each = {
     for a in var.accounts : a.name => a if a.domain_name != null
@@ -19,12 +26,9 @@ module "route53" {
 }
 
 resource "aws_organizations_account" "this" {
-  for_each = { for a in var.accounts : a.name => a }
-  name     = each.value.name
-  # this is here as a reminder of my naivety and also in case 
-  # TODO: we want contact emails to be programmatically defined in one single place.
-  #email             = "acct_${each.value.name}@vide.fastmail.com"
-  email             = each.value.email
+  for_each          = { for a in var.accounts : a.name => a }
+  name              = each.value.name
+  email             = local.email[each.key]
   parent_id         = each.value.parent_id
   role_name         = each.value.role
   close_on_deletion = each.value.close_on_deletion
