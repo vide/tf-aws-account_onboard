@@ -5,6 +5,7 @@
  * If the logic of the infrastructure needs to be extended or modified, this
  * is the right place to do it.
  * 
+ * Account owner email can be either be passed as a parameter or let it auto-generated, based on the account name.
  * If a `domain_name` parameter within the `accounts` list of maps  is null, it will **NOT** create any DNS resource at all
  * for that account.
  *
