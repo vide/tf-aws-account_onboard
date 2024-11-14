@@ -34,7 +34,8 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_accounts"></a> [accounts](#input\_accounts) | List of the accounts to be created. Mandatory values: `name`, for the account name | <pre>list(object({<br/>    name              = string<br/>    email             = optional(string, null)<br/>    close_on_deletion = optional(bool, false)<br/>    role              = optional(string, "RootAccountAccessRole")<br/>    domain_name       = optional(string, null)<br/>    dns_records = optional(list(object({<br/>      name    = string<br/>      type    = string<br/>      ttl     = number<br/>      records = list(string)<br/>    })), [])<br/>  }))</pre> | `[]` | no |
+| <a name="input_accounts"></a> [accounts](#input\_accounts) | List of the accounts to be created. Mandatory values: `name`, for the account name | <pre>list(object({<br/>    name              = string<br/>    email             = optional(string, null)<br/>    parent_id         = optional(string, null)<br/>    close_on_deletion = optional(bool, false)<br/>    role              = optional(string, "RootAccountAccessRole")<br/>    domain_name       = optional(string, null)<br/>    dns_records = optional(list(object({<br/>      name    = string<br/>      type    = string<br/>      ttl     = number<br/>      records = list(string)<br/>    })), [])<br/>  }))</pre> | `[]` | no |
+| <a name="input_org"></a> [org](#input\_org) | Control details of the root Organization | <pre>object({<br/>    org_units = list(object({<br/>      name = string<br/>    }))<br/>  })</pre> | `null` | no |
 
 ## Outputs
 
