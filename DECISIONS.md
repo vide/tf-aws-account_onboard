@@ -30,6 +30,12 @@ Emphasis on the "for", which adds vaguety to the statement IMO. If this what you
 
 FYI I didn't implement it with multi-account because it would make the terraform process much more complicated, since the accounts are dynamically created and then it's complicated (impossible?) to use them in a provider in the same TF pass.
 
+# Alternative implementations?
+
+After writing all the code for the org+accounts management myself, I found out there is an existing TF module which seems quite similar to part of the task asked here: https://github.com/getindata/terraform-aws-organization/
+So, another possible approach would be relying on this module instead of the homegrown `organization` and `account` modules. The Route53 part should be implemented anyway but it could be done either with what
+we have now or with some other 3rd party module.
+
 # Lessons learned (or remembered... again)
 
 AWS Accounts can be a bad beast with Terraform because there are important things behind private API (i.e. payment method) and because well, they are a very sensitive piece of AWS (imagine destroying an account by accident), so they might need some extra manual steps, especially if you are playing-doing PoC with them. And also [mandatory wait times](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_troubleshoot.html#troubleshoot_general_error-wait-req) before being able to actually perform the action.
