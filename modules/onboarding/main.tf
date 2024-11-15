@@ -31,6 +31,27 @@ locals {
 }
 
 module "accounts" {
-  source   = "../account"
-  accounts = local.accounts_with_parent
+  count   = count(local.accounts_with_parent)
+  source  = "../account"
+  account = local.accounts_with_parent[count.index]
+  domain  = a
+
+}
+
+
+resource "local_file" "providers" {
+  filename = "${path.module}/children_accounts_providers.tf"
+
+  content = join("\n", [
+    for account_key, account in module.accounts :
+    <<EOT
+provider "aws" {
+  alias  = "${account_key}"
+  region = "eu-west-1"
+  assume_role {
+    role_arn = "arn:aws:iam::${account.id}:role/${account.role_name}"
+  }
+}
+EOT
+  ])
 }

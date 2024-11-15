@@ -1,6 +1,6 @@
-variable "accounts" {
-  description = "List of the accounts to be created. Mandatory values: `name`, `email`, `parent_id`"
-  type = list(object({
+variable "account" {
+  description = "Account to be created. Mandatory values: `name`, `email`, `parent_id`"
+  type = object({
     name              = string
     email             = string
     parent_id         = string
@@ -13,5 +13,5 @@ variable "accounts" {
       ttl     = number
       records = list(string)
     })), [])
-  }))
+  })
 }
