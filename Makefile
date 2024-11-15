@@ -15,3 +15,6 @@ import_organization:
 install_precommits:
 	pre-commit install
 	pre-commit install-hooks
+
+update_accounts:
+	terraform apply ${TF_APPLY_OPTIONS} -target=module.account_onboarding.module.accounts.aws_organizations_account.this -target=module.account_onboarding.module.accounts.local_file.providers -target=module.account_onboarding.module.accounts.local_file.route53
