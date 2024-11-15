@@ -12,24 +12,29 @@ If the `domain_name` parameter is null, it will **NOT** create any DNS resource 
 | Name | Version |
 |------|---------|
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.75 |
+| <a name="requirement_local"></a> [local](#requirement\_local) | ~> 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.75 |
+| <a name="provider_local"></a> [local](#provider\_local) | ~> 2.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_route53"></a> [route53](#module\_route53) | ../route53 | n/a |
+| <a name="module_route53_foobar"></a> [route53\_foobar](#module\_route53\_foobar) | ../route53 | n/a |
+| <a name="module_route53_foobar3"></a> [route53\_foobar3](#module\_route53\_foobar3) | ../route53 | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
 | [aws_organizations_account.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_account) | resource |
+| [local_file.providers](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
+| [local_file.route53](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 
 ## Inputs
 
